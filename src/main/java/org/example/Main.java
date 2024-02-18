@@ -22,56 +22,26 @@ public class Main {
                 }
             }
         }).start();
+        counter(queueA, 'a');
+        counter(queueB, 'b');
+        counter(queueC, 'c');
+    }
 
+    public static void counter(ArrayBlockingQueue<String> queue, char letter) {
         new Thread(() -> {
-            int maxSizeA = 0;
-            String maxTextA = "";
+            int maxSize = 0;
+            String maxText = "";
             try {
-                String text = queueA.take();
-                int countA = howMany(text, 'a');
-                if (countA > maxSizeA) {
-                    maxSizeA = countA;
-                    maxTextA = text;
+                String text = queue.take();
+                int count = howMany(text, letter);
+                if (count > maxSize) {
+                    maxSize = count;
+                    maxText = text;
                 }
             } catch (InterruptedException e) {
                 return;
             }
-//            System.out.println(maxTextA);
-//            System.out.println(maxSizeA);
-        }).start();
-
-        new Thread(() -> {
-            int maxSizeB = 0;
-            String maxTextB = "";
-            try {
-                String text = queueB.take();
-                int countB = howMany(text, 'b');
-                if (countB > maxSizeB) {
-                    maxSizeB = countB;
-                    maxTextB = text;
-                }
-            } catch (InterruptedException e) {
-                return;
-            }
-//            System.out.println(maxTextB);
-//            System.out.println(maxSizeB);
-        }).start();
-
-        new Thread(() -> {
-            int maxSizeC = 0;
-            String maxTextC = "";
-            try {
-                String text = queueC.take();
-                int countC = howMany(text, 'a');
-                if (countC > maxSizeC) {
-                    maxSizeC = countC;
-                    maxTextC = text;
-                }
-            } catch (InterruptedException e) {
-                return;
-            }
-//            System.out.println(maxTextC);
-//            System.out.println(maxSizeC);
+            //    System.out.println(maxText + '\n' + "Макс. кол-во " + letter + " : " + maxSize);
         }).start();
     }
 
